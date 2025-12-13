@@ -32,6 +32,19 @@ public class TaskManager {
         return task;
     }
 
+    // FR4 - View All Tasks
+public void printAllTasks() {
+    if (tasks.isEmpty()) {
+        System.out.println("No tasks available.");
+        return;
+    }
+
+    for (Task task : tasks) {
+        System.out.println(task);
+    }
+}
+
+
     public List<Task> getAllTasks() {
         return tasks;
     }

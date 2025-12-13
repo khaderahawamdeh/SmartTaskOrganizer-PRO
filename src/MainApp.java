@@ -36,6 +36,10 @@ public class MainApp {
 
         System.out.println("\nTask created successfully!");
         System.out.println(task);
+
+        System.out.println("\n--- All Tasks ---");
+        manager.printAllTasks();
+
     }
 }
 
