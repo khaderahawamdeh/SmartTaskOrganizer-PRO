@@ -12,7 +12,7 @@ public class Task {
     private TaskStatus status;
 
     public Task(int id, String title, String description,
-                LocalDate deadline, Priority priority) {
+            LocalDate deadline, Priority priority) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -43,6 +43,22 @@ public class Task {
 
     public TaskStatus getStatus() {
         return status;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
     }
 
     public void setStatus(TaskStatus status) {

@@ -17,15 +17,14 @@ public class TaskManager {
     }
 
     public Task addTask(String title, String description,
-                        LocalDate deadline, Priority priority) {
+            LocalDate deadline, Priority priority) {
 
         Task task = new Task(
                 nextId,
                 title,
                 description,
                 deadline,
-                priority
-        );
+                priority);
 
         tasks.add(task);
         nextId++;
@@ -33,19 +32,36 @@ public class TaskManager {
     }
 
     // FR4 - View All Tasks
-public void printAllTasks() {
-    if (tasks.isEmpty()) {
-        System.out.println("No tasks available.");
-        return;
-    }
+    public void printAllTasks() {
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks available.");
+            return;
+        }
 
-    for (Task task : tasks) {
-        System.out.println(task);
+        for (Task task : tasks) {
+            System.out.println(task);
+        }
     }
-}
-
 
     public List<Task> getAllTasks() {
         return tasks;
     }
+
+    public boolean editTask(int id, String newTitle,
+            String newDescription,
+            LocalDate newDeadline,
+            Priority newPriority) {
+
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                task.setTitle(newTitle);
+                task.setDescription(newDescription);
+                task.setDeadline(newDeadline);
+                task.setPriority(newPriority);
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
