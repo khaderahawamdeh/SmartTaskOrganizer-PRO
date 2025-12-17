@@ -21,6 +21,7 @@ public class MainApp {
 
             int choice = Integer.parseInt(input.nextLine());
 
+            // ================= CREATE =================
             if (choice == 1) {
                 System.out.print("Title: ");
                 String title = input.nextLine();
@@ -38,40 +39,85 @@ public class MainApp {
                 manager.addTask(title, description, deadline, priority);
                 System.out.println("Task added successfully!");
 
-            } else if (choice == 2) {
+            }
+
+            // ================= EDIT =================
+            else if (choice == 2) {
+
+                if (manager.getAllTasks().isEmpty()) {
+                    System.out.println("No tasks available.");
+                    continue;
+                }
+
+                manager.printAllTasks();
+
                 System.out.print("Enter task ID to edit: ");
                 int id = Integer.parseInt(input.nextLine());
 
-                System.out.print("New title: ");
-                String newTitle = input.nextLine();
+                System.out.println("What do you want to edit?");
+                System.out.println("1. Title");
+                System.out.println("2. Description");
+                System.out.println("3. Deadline");
+                System.out.println("4. Priority");
+                System.out.print("Choose option: ");
 
-                System.out.print("New description: ");
-                String newDescription = input.nextLine();
+                int editChoice = Integer.parseInt(input.nextLine());
 
-                System.out.print("New deadline (YYYY-MM-DD): ");
-                LocalDate newDeadline = LocalDate.parse(input.nextLine());
+                String newTitle = null;
+                String newDescription = null;
+                LocalDate newDeadline = null;
+                Priority newPriority = null;
 
-                System.out.print("New priority (HIGH, MEDIUM, LOW): ");
-                Priority newPriority =
-                        Priority.valueOf(input.nextLine().toUpperCase());
+                switch (editChoice) {
+                    case 1:
+                        System.out.print("New title: ");
+                        newTitle = input.nextLine();
+                        break;
 
-                boolean updated = manager.editTask(
+                    case 2:
+                        System.out.print("New description: ");
+                        newDescription = input.nextLine();
+                        break;
+
+                    case 3:
+                        System.out.print("New deadline (YYYY-MM-DD): ");
+                        newDeadline = LocalDate.parse(input.nextLine());
+                        break;
+
+                    case 4:
+                        System.out.print("New priority (HIGH, MEDIUM, LOW): ");
+                        newPriority =
+                                Priority.valueOf(input.nextLine().toUpperCase());
+                        break;
+
+                    default:
+                        System.out.println("Invalid choice.");
+                        continue;
+                }
+
+                boolean updated = manager.editTaskPartial(
                         id, newTitle, newDescription, newDeadline, newPriority
                 );
 
                 if (updated) {
-                    System.out.println("Task updated!");
+                    System.out.println("Task updated successfully!");
                 } else {
                     System.out.println("Task not found!");
                 }
+            }
 
-            } else if (choice == 3) {
+            // ================= VIEW =================
+            else if (choice == 3) {
                 manager.printAllTasks();
+            }
 
-            } else if (choice == 4) {
+            // ================= EXIT =================
+            else if (choice == 4) {
                 System.out.println("Goodbye!");
                 break;
-            } else {
+            }
+
+            else {
                 System.out.println("Invalid option!");
             }
         }

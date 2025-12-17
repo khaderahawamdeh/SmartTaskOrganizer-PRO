@@ -7,6 +7,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
 public class TaskManager {
 
     private List<Task> tasks;
@@ -28,6 +33,7 @@ public class TaskManager {
 
         tasks.add(task);
         nextId++;
+        saveTasksToFile();
         return task;
     }
 
@@ -47,21 +53,59 @@ public class TaskManager {
         return tasks;
     }
 
-    public boolean editTask(int id, String newTitle,
-            String newDescription,
-            LocalDate newDeadline,
-            Priority newPriority) {
+    public void saveTasksToFile() {
+    try {
+        File dir = new File("data");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+
+        FileWriter writer = new FileWriter("data/tasks.txt");
 
         for (Task task : tasks) {
-            if (task.getId() == id) {
-                task.setTitle(newTitle);
-                task.setDescription(newDescription);
-                task.setDeadline(newDeadline);
-                task.setPriority(newPriority);
-                return true;
-            }
+            writer.write(
+                task.getId() + "|" +
+                task.getTitle() + "|" +
+                task.getDescription() + "|" +
+                task.getDeadline() + "|" +
+                task.getPriority() + "|" +
+                task.getStatus() + "\n"
+            );
         }
-        return false;
+
+        writer.close();
+    } catch (IOException e) {
+        System.out.println("Error saving tasks to file.");
     }
+}
+
+   public boolean editTaskPartial(int id,
+        String newTitle,
+        String newDescription,
+        LocalDate newDeadline,
+        Priority newPriority) {
+
+    for (Task task : tasks) {
+        if (task.getId() == id) {
+
+            if (newTitle != null)
+                task.setTitle(newTitle);
+
+            if (newDescription != null)
+                task.setDescription(newDescription);
+
+            if (newDeadline != null)
+                task.setDeadline(newDeadline);
+
+            if (newPriority != null)
+                task.setPriority(newPriority);
+
+            saveTasksToFile();
+            return true;
+        }
+    }
+    return false;
+}
+
 
 }
