@@ -17,7 +17,8 @@ public class MainApp {
             System.out.println("2. Edit Task");
             System.out.println("3. Delete Task");
             System.out.println("4. View All Tasks");
-            System.out.println("5. Exit");
+            System.out.println("5. Mark Task as Completed");
+            System.out.println("6. Exit");
             System.out.print("Choose option: ");
 
             int choice = Integer.parseInt(input.nextLine());
@@ -131,8 +132,28 @@ public class MainApp {
                 manager.printAllTasks();
             }
 
-            // ================= EXIT =================
             else if (choice == 5) {
+                if (manager.getAllTasks().isEmpty()) {
+                    System.out.println("No tasks available.");
+                    continue;
+                }
+
+                manager.printAllTasks();
+
+                System.out.print("Enter task ID to mark as completed: ");
+                int id = Integer.parseInt(input.nextLine());
+
+                boolean done = manager.markTaskCompleted(id);
+
+                if (done) {
+                    System.out.println("Task marked as COMPLETED!");
+                } else {
+                    System.out.println("Task not found!");
+                }
+            }
+
+            // ================= EXIT =================
+            else if (choice == 6) {
                 System.out.println("Goodbye!");
                 break;
             }

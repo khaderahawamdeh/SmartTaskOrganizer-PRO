@@ -153,4 +153,15 @@ public class TaskManager {
         return false;
     }
 
+    public boolean markTaskCompleted(int id) {
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                task.setStatus(TaskStatus.COMPLETED);
+                saveTasksToFile();
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
