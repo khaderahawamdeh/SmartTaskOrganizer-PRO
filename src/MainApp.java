@@ -18,7 +18,8 @@ public class MainApp {
             System.out.println("3. Delete Task");
             System.out.println("4. View All Tasks");
             System.out.println("5. Mark Task as Completed");
-            System.out.println("6. Exit");
+            System.out.println("6. Sort Tasks");
+            System.out.println("7. Exit");
             System.out.print("Choose option: ");
 
             int choice = Integer.parseInt(input.nextLine());
@@ -152,8 +153,33 @@ public class MainApp {
                 }
             }
 
-            // ================= EXIT =================
             else if (choice == 6) {
+
+                if (manager.getAllTasks().isEmpty()) {
+                    System.out.println("No tasks available.");
+                    continue;
+                }
+
+                System.out.println("Sort by:");
+                System.out.println("1. Deadline");
+                System.out.println("2. Priority");
+                System.out.print("Choose option: ");
+                int sortChoice = Integer.parseInt(input.nextLine());
+
+                if (sortChoice == 1) {
+                    manager.sortByDeadline();
+                } else if (sortChoice == 2) {
+                    manager.sortByPriority();
+                } else {
+                    System.out.println("Invalid option.");
+                    continue;
+                }
+
+                manager.printAllTasks();
+            }
+
+            // ================= EXIT =================
+            else if (choice == 7) {
                 System.out.println("Goodbye!");
                 break;
             }

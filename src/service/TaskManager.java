@@ -164,4 +164,12 @@ public class TaskManager {
         return false;
     }
 
+    public void sortByDeadline() {
+        tasks.sort((t1, t2) -> t1.getDeadline().compareTo(t2.getDeadline()));
+    }
+
+    public void sortByPriority() {
+        tasks.sort((t1, t2) -> t1.getPriority().compareTo(t2.getPriority()));
+    }
+
 }
