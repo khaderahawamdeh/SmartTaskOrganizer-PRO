@@ -15,8 +15,9 @@ public class MainApp {
             System.out.println("\n=== Smart Task Organizer ===");
             System.out.println("1. Create Task");
             System.out.println("2. Edit Task");
-            System.out.println("3. View All Tasks");
-            System.out.println("4. Exit");
+            System.out.println("3. Delete Task");
+            System.out.println("4. View All Tasks");
+            System.out.println("5. Exit");
             System.out.print("Choose option: ");
 
             int choice = Integer.parseInt(input.nextLine());
@@ -33,8 +34,7 @@ public class MainApp {
                 LocalDate deadline = LocalDate.parse(input.nextLine());
 
                 System.out.print("Priority (HIGH, MEDIUM, LOW): ");
-                Priority priority =
-                        Priority.valueOf(input.nextLine().toUpperCase());
+                Priority priority = Priority.valueOf(input.nextLine().toUpperCase());
 
                 manager.addTask(title, description, deadline, priority);
                 System.out.println("Task added successfully!");
@@ -86,8 +86,7 @@ public class MainApp {
 
                     case 4:
                         System.out.print("New priority (HIGH, MEDIUM, LOW): ");
-                        newPriority =
-                                Priority.valueOf(input.nextLine().toUpperCase());
+                        newPriority = Priority.valueOf(input.nextLine().toUpperCase());
                         break;
 
                     default:
@@ -96,8 +95,7 @@ public class MainApp {
                 }
 
                 boolean updated = manager.editTaskPartial(
-                        id, newTitle, newDescription, newDeadline, newPriority
-                );
+                        id, newTitle, newDescription, newDeadline, newPriority);
 
                 if (updated) {
                     System.out.println("Task updated successfully!");
@@ -106,13 +104,35 @@ public class MainApp {
                 }
             }
 
-            // ================= VIEW =================
+            // ================= DELETE =================
             else if (choice == 3) {
+
+                if (manager.getAllTasks().isEmpty()) {
+                    System.out.println("No tasks available.");
+                    continue;
+                }
+
+                manager.printAllTasks();
+
+                System.out.print("Enter task ID to delete: ");
+                int id = Integer.parseInt(input.nextLine());
+
+                boolean deleted = manager.deleteTask(id);
+
+                if (deleted) {
+                    System.out.println("Task deleted successfully!");
+                } else {
+                    System.out.println("Task not found!");
+                }
+            }
+
+            // ================= VIEW =================
+            else if (choice == 4) {
                 manager.printAllTasks();
             }
 
             // ================= EXIT =================
-            else if (choice == 4) {
+            else if (choice == 5) {
                 System.out.println("Goodbye!");
                 break;
             }
