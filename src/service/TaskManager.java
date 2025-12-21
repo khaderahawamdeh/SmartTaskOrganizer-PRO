@@ -93,7 +93,8 @@ public class TaskManager {
     }
 
     private void loadTasksFromFile() {
-        File file = new File("data/tasks.txt");
+        File file = new File(
+                "C:/Users/PcUser/OneDrive/Desktop/smartOrganizer-PRO/SmartTaskOrganizer-PRO/data/tasks.txt");
         if (!file.exists()) {
             return;
         }
@@ -170,6 +171,48 @@ public class TaskManager {
 
     public void sortByPriority() {
         tasks.sort((t1, t2) -> t1.getPriority().compareTo(t2.getPriority()));
+    }
+
+    // FR7 - Filter completed tasks
+    public void showCompletedTasks() {
+        boolean found = false;
+        for (Task task : tasks) {
+            if (task.getStatus() == TaskStatus.COMPLETED) {
+                System.out.println(task);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No completed tasks.");
+        }
+    }
+
+    // FR7 - Filter not completed tasks
+    public void showNotCompletedTasks() {
+        boolean found = false;
+        for (Task task : tasks) {
+            if (task.getStatus() != TaskStatus.COMPLETED) {
+                System.out.println(task);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No pending tasks.");
+        }
+    }
+
+    // FR7 - Filter high priority tasks
+    public void showHighPriorityTasks() {
+        boolean found = false;
+        for (Task task : tasks) {
+            if (task.getPriority() == Priority.HIGH) {
+                System.out.println(task);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No high priority tasks.");
+        }
     }
 
 }

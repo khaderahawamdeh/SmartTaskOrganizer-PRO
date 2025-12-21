@@ -19,7 +19,8 @@ public class MainApp {
             System.out.println("4. View All Tasks");
             System.out.println("5. Mark Task as Completed");
             System.out.println("6. Sort Tasks");
-            System.out.println("7. Exit");
+            System.out.println("7. Filter Tasks");
+            System.out.println("8. Exit");
             System.out.print("Choose option: ");
 
             int choice = Integer.parseInt(input.nextLine());
@@ -178,8 +179,34 @@ public class MainApp {
                 manager.printAllTasks();
             }
 
-            // ================= EXIT =================
+            // ================= FILTER =================
             else if (choice == 7) {
+
+                System.out.println("Filter by:");
+                System.out.println("1. Completed tasks");
+                System.out.println("2. Not completed tasks");
+                System.out.println("3. High priority tasks");
+                System.out.print("Choose option: ");
+
+                int filterChoice = Integer.parseInt(input.nextLine());
+
+                switch (filterChoice) {
+                    case 1:
+                        manager.showCompletedTasks();
+                        break;
+                    case 2:
+                        manager.showNotCompletedTasks();
+                        break;
+                    case 3:
+                        manager.showHighPriorityTasks();
+                        break;
+                    default:
+                        System.out.println("Invalid filter option.");
+                }
+            }
+
+            // ================= EXIT =================
+            else if (choice == 8) {
                 System.out.println("Goodbye!");
                 break;
             }
