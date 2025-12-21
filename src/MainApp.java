@@ -20,7 +20,8 @@ public class MainApp {
             System.out.println("5. Mark Task as Completed");
             System.out.println("6. Sort Tasks");
             System.out.println("7. Filter Tasks");
-            System.out.println("8. Exit");
+            System.out.println("8. Export Tasks");
+            System.out.println("9. Exit");
             System.out.print("Choose option: ");
 
             int choice = Integer.parseInt(input.nextLine());
@@ -205,8 +206,12 @@ public class MainApp {
                 }
             }
 
-            // ================= EXIT =================
             else if (choice == 8) {
+                manager.exportTasksToTextFile();
+            }
+
+            // ================= EXIT =================
+            else if (choice == 9) {
                 System.out.println("Goodbye!");
                 break;
             }

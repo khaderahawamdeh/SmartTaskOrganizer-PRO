@@ -215,4 +215,18 @@ public class TaskManager {
         }
     }
 
+    public void exportTasksToTextFile() {
+        try (FileWriter writer = new FileWriter("data/exported_tasks.txt")) {
+
+            for (Task task : tasks) {
+                writer.write(task.toString() + System.lineSeparator());
+            }
+
+            System.out.println("Tasks exported successfully to exported_tasks.txt");
+
+        } catch (IOException e) {
+            System.out.println("Error exporting tasks.");
+        }
+    }
+
 }
