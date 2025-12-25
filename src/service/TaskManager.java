@@ -2,6 +2,7 @@ package service;
 
 import model.Task;
 import model.TaskStatus;
+import service.strategy.SortStrategy;
 import model.Priority;
 
 import java.time.LocalDate;
@@ -18,6 +19,8 @@ public class TaskManager {
 
     private List<Task> tasks;
     private int nextId = 1;
+
+    private SortStrategy sortStrategy;
 
     public TaskManager() {
         tasks = new ArrayList<>();
@@ -40,7 +43,6 @@ public class TaskManager {
         return task;
     }
 
-    // FR4 - View All Tasks
     public void printAllTasks() {
         if (tasks.isEmpty()) {
             System.out.println("No tasks available.");
@@ -94,7 +96,7 @@ public class TaskManager {
 
     private void loadTasksFromFile() {
         File file = new File(
-                "C:/Users/PcUser/OneDrive/Desktop/smartOrganizer-PRO/SmartTaskOrganizer-PRO/data/tasks.txt");
+                "data/tasks.txt");
         if (!file.exists()) {
             return;
         }
@@ -165,15 +167,19 @@ public class TaskManager {
         return false;
     }
 
-    public void sortByDeadline() {
-        tasks.sort((t1, t2) -> t1.getDeadline().compareTo(t2.getDeadline()));
+    public void setSortStrategy(SortStrategy strategy) {
+        this.sortStrategy = strategy;
     }
 
-    public void sortByPriority() {
-        tasks.sort((t1, t2) -> t1.getPriority().compareTo(t2.getPriority()));
+    public void sortTasks() {
+        if (sortStrategy == null) {
+            System.out.println("No sorting strategy selected!");
+            return;
+        }
+        sortStrategy.sort(tasks);
     }
 
-    // FR7 - Filter completed tasks
+
     public void showCompletedTasks() {
         boolean found = false;
         for (Task task : tasks) {
@@ -187,7 +193,7 @@ public class TaskManager {
         }
     }
 
-    // FR7 - Filter not completed tasks
+
     public void showNotCompletedTasks() {
         boolean found = false;
         for (Task task : tasks) {
@@ -201,7 +207,7 @@ public class TaskManager {
         }
     }
 
-    // FR7 - Filter high priority tasks
+
     public void showHighPriorityTasks() {
         boolean found = false;
         for (Task task : tasks) {

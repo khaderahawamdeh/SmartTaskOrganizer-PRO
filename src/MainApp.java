@@ -4,6 +4,9 @@ import service.TaskManager;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+import service.strategy.SortByDeadlineStrategy;
+import service.strategy.SortByPriorityStrategy;
+
 public class MainApp {
 
     public static void main(String[] args) {
@@ -26,7 +29,7 @@ public class MainApp {
 
             int choice = Integer.parseInt(input.nextLine());
 
-            // ================= CREATE =================
+
             if (choice == 1) {
                 System.out.print("Title: ");
                 String title = input.nextLine();
@@ -45,7 +48,7 @@ public class MainApp {
 
             }
 
-            // ================= EDIT =================
+
             else if (choice == 2) {
 
                 if (manager.getAllTasks().isEmpty()) {
@@ -108,7 +111,7 @@ public class MainApp {
                 }
             }
 
-            // ================= DELETE =================
+
             else if (choice == 3) {
 
                 if (manager.getAllTasks().isEmpty()) {
@@ -168,19 +171,23 @@ public class MainApp {
                 System.out.print("Choose option: ");
                 int sortChoice = Integer.parseInt(input.nextLine());
 
-                if (sortChoice == 1) {
-                    manager.sortByDeadline();
-                } else if (sortChoice == 2) {
-                    manager.sortByPriority();
-                } else {
-                    System.out.println("Invalid option.");
-                    continue;
+                switch (sortChoice) {
+                    case 1:
+                        manager.setSortStrategy(new SortByDeadlineStrategy());
+                        break;
+                    case 2:
+                        manager.setSortStrategy(new SortByPriorityStrategy());
+                        break;
+                    default:
+                        System.out.println("Invalid option.");
+                        continue;
                 }
 
+                manager.sortTasks();
                 manager.printAllTasks();
             }
 
-            // ================= FILTER =================
+
             else if (choice == 7) {
 
                 System.out.println("Filter by:");
@@ -210,7 +217,7 @@ public class MainApp {
                 manager.exportTasksToTextFile();
             }
 
-            // ================= EXIT =================
+
             else if (choice == 9) {
                 System.out.println("Goodbye!");
                 break;
